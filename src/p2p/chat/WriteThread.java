@@ -4,11 +4,11 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class WriteThread extends Thread{
+public class WriteThread extends Thread {
     private String hostname;
     private int port;
 
-    public WriteThread(String hostname, int port){
+    public WriteThread(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
     }
@@ -30,6 +30,4 @@ public class WriteThread extends Thread{
             System.out.println("An error has occurred " + io.getMessage());
         }
     }
-
-
 }
