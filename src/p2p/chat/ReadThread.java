@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * A thread that handles messages incoming at the listening port.
+ */
 public class ReadThread extends Thread {
-    private int port;
+    final private int port;
 
     public ReadThread(int port){ this.port = port; }
     public void run() {
@@ -33,8 +36,9 @@ public class ReadThread extends Thread {
                 }
             }
 
-            socket.close();
             input.close();
+            socket.close();
+
         } catch (IOException ex) {
             System.out.println("An error occurred while instantiating the listening server");
         }

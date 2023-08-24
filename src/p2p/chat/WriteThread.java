@@ -4,30 +4,42 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * A thread that handles sending messages to a remote host.
+ */
 public class WriteThread extends Thread {
-    private String hostname;
-    private int port;
+    final private String hostname;
+    final private int port;
 
     public WriteThread(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
     }
     public void run() {
-        try {
-            Socket socket = new Socket(hostname, port);
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+        while (true) {
+            try (Socket socket = new Socket(hostname, port)) {
 
-            Scanner scanner = new Scanner(System.in);
+                DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 
-            String input = "";
+                Scanner scanner = new Scanner(System.in);
 
-            while(!input.equals("exit")) {
-                input = scanner.nextLine();
-                output.writeUTF(input);
+                String input = "";
+
+                while (!input.equals("exit")) {
+                    input = scanner.nextLine();
+                    output.writeUTF(input);
+                }
+
+                break;
+
+            } catch (IOException io) {
+                System.out.println("An error has occurred. Attempting to reconnect...");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
             }
-
-        } catch (IOException io) {
-            System.out.println("An error has occurred " + io.getMessage());
         }
     }
 }
