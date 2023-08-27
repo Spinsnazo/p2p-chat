@@ -10,9 +10,10 @@ import java.net.Socket;
  * A thread that handles messages incoming at the listening port.
  */
 public class ReadThread extends Thread {
-    final private int port;
+    private final int port;
 
     public ReadThread(int port){ this.port = port; }
+	
     public void run() {
         try(ServerSocket serverSocket = new ServerSocket(port)) {
 

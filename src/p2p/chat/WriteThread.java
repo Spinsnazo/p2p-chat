@@ -8,13 +8,14 @@ import java.util.Scanner;
  * A thread that handles sending messages to a remote host.
  */
 public class WriteThread extends Thread {
-    final private String hostname;
-    final private int port;
+    private final String hostname;
+    private final int port;
 
     public WriteThread(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
     }
+	
     public void run() {
         while (true) {
             try (Socket socket = new Socket(hostname, port)) {
