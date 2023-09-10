@@ -3,6 +3,7 @@ package p2p.chat;
 import java.util.Scanner;
 
 public class Main {
+    public static boolean isTerminated = false;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please specify the listening port number: ");
@@ -14,10 +15,12 @@ public class Main {
             System.out.println(ex.getMessage());
         }
 
-        System.out.print("Please specify the host address: ");
+        System.out.print("Please specify the remote host address: ");
         String hostname = scanner.nextLine();
         System.out.print("Please specify the remote port number: ");
         int remotePort = scanner.nextInt();
+
+        System.out.println("Type in 'exit' and then any other input to terminate the connection.");
 
         try {
             new WriteThread(hostname, remotePort).start();

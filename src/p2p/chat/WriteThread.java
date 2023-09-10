@@ -26,9 +26,13 @@ public class WriteThread extends Thread {
 
                 String input = "";
 
-                while (!input.equals("exit")) {
+                while (!Main.isTerminated) {
                     input = scanner.nextLine();
                     output.writeUTF(input);
+
+                    if(input.equals("exit")) {
+                        Main.isTerminated = true;
+                    }
                 }
 
                 break;

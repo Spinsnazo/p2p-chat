@@ -20,17 +20,20 @@ public class ReadThread extends Thread {
             Socket socket = serverSocket.accept();
 
             String remoteIP = socket.getInetAddress().getHostAddress();
-            int remotePort = socket.getPort();
-
-            String text = "";
 
             DataInputStream input;
             input = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
-            while(!text.equals("exit")) {
+            String readText = "";
+
+            while(!Main.isTerminated) {
                 try {
-                    text = "[" + remoteIP + ":"+ remotePort + "]: " + input.readUTF();
-                    System.out.println(text);
+                    readText = input.readUTF();
+                    System.out.println("[" + remoteIP + "]: " + readText);
+
+                    if(readText.equals("exit")) {
+                        Main.isTerminated = true;
+                    }
                 } catch (IOException io) {
                     System.out.println("An error has occurred while receiving a message");
                     break;
